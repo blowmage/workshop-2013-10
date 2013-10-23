@@ -18,4 +18,9 @@ class HelloWorldTest < MiniTest::Unit::TestCase
   def test_greeting_with_name
     assert_equal "Hello Mike!", greeter.greet("Mike")
   end
+
+  def test_greeting_is_a_string
+    assert greeter.greet.instance_of?(String)
+    assert_instance_of String, greeter.greet
+  end
 end
