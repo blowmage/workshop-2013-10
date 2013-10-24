@@ -20,4 +20,8 @@ class Group < ActiveRecord::Base
   def posts_for date
     posts.where(date: date)
   end
+
+  def post_for user, date
+    posts.where(user: user, date: date).first
+  end
 end
