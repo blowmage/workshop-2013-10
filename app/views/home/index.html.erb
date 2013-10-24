@@ -1,2 +1,8 @@
 <h1>Daily Standup</h1>
-<p>Welcome!</p>
+<p>
+  <% if logged_in? %>
+    Welcome <%= current_user.name %>! <%= link_to "logout", logout_path, method: :delete %>
+  <% else %>
+    Welcome! Please <%= link_to "login", login_path %>
+  <% end %>
+</p>
