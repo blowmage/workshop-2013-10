@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
 
   has_many :memberships
   has_many :users, through: :memberships
+  has_many :posts
 
   def is_member? user
     users.include? user
@@ -14,5 +15,9 @@ class Group < ActiveRecord::Base
 
   def remove_member user
     users.delete user if is_member? user
+  end
+
+  def posts_for date
+    posts.where(date: date)
   end
 end
