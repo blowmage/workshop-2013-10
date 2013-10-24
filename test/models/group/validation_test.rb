@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class GroupTest < ActiveSupport::TestCase
+class GroupValidationTest < ActiveSupport::TestCase
   def test_can_be_valid
     group = groups :payroll
     assert group.valid?
