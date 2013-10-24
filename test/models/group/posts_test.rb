@@ -28,4 +28,21 @@ class GroupPostTest < ActiveSupport::TestCase
                  group.post_for(users(:jack), Date.today)
     assert_nil group.post_for(users(:mike), Date.today)
   end
+
+  def test_add_post
+    # mike doesn't have any posts for payroll
+    mike = users :mike
+    assert_difference "Post.count", 1 do
+      group.add_post mike, Date.today, "I'm late, but I got it done."
+    end
+  end
+
+  def test_add_post_wont_create_duplicates
+    # ben already has a post for payroll
+    ben = users :ben
+    assert_difference "Post.count", 0 do
+      post = group.add_post ben, Date.today, "This is a duplicate."
+      refute post.valid?
+    end
+  end
 end
