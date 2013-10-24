@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PostsControllerTest < ActionController::TestCase
   setup do
-    session[:user_id] = users(:mike).id
+    login_with users(:mike)
     @group = groups :payroll
     @day = Date.today
     @post = posts :payroll_carl_today
