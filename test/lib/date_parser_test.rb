@@ -3,6 +3,7 @@ require "date_parser"
 
 class DateParserTest < MiniTest::Unit::TestCase
   def test_parse
+    assert_nil parse(nil)
     assert_nil parse("")
     assert_nil parse("booya")
     assert_equal Date.today, parse("today")

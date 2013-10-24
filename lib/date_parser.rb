@@ -8,7 +8,7 @@ module DateParser
     when "tomorrow"
       Date.tomorrow
     else
-      Date.parse input
+      Date.parse input.to_s
     end
   rescue ArgumentError
     nil

@@ -13,7 +13,11 @@
 
 <ul>
   <% @posts.each do |post| %>
-    <li><%= post.user.name %> says: <%= post.body %> - <%= pluralize post.comments.count, "comment" %></li>
+    <li>
+      <%= post.user.name %>
+      <%= link_to "says:", group_day_post_path(post.group, post.date, post) %>
+      <%= post.body %> - <%= pluralize post.comments.count, "comment" %>
+    </li>
   <% end %>
 </ul>
 

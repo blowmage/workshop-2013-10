@@ -2,7 +2,9 @@ Standup::Application.routes.draw do
   root "home#index"
 
   resources :groups, only: [:index, :show] do
-    resources :days, only: [:index, :show]
+    resources :days, only: [:index, :show] do
+      resources :posts
+    end
   end
 
   # Session login/logout
