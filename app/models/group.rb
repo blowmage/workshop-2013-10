@@ -28,4 +28,9 @@ class Group < ActiveRecord::Base
   def add_post user, date, body
     posts.create user: user, date: date, body: body
   end
+
+  def add_comment user, post, body
+    # TODO: Do something if post doesn't belong to group?
+    post.comments.create user: user, body: body
+  end
 end
