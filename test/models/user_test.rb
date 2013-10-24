@@ -13,6 +13,15 @@ class UserTest < ActiveSupport::TestCase
     assert_includes mike.errors[:email], "can't be blank"
   end
 
+  def test_validates_email_uniqueness
+    mike = users :mike
+    mike2 = User.create email: mike.email,
+                        password: "mike2",
+                        password_confirmation: "mike2"
+    refute_valid mike2
+    assert_includes mike2.errors[:email], "has already been taken"
+  end
+
   def test_can_authenticate
     mike = users :mike
     refute_nil mike.authenticate("mike")
