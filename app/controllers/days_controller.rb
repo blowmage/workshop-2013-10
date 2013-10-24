@@ -1,3 +1,5 @@
+require "date_parser"
+
 class DaysController < ApplicationController
   before_filter :set_group
   rescue_from ActiveRecord::RecordNotFound do
@@ -26,17 +28,8 @@ class DaysController < ApplicationController
   end
 
   def date
-    case params[:id]
-    when "today"
-      Date.today
-    when "yesterday"
-      Date.yesterday
-    when "tomorrow"
-      Date.tomorrow
-    else
-      Date.parse params[:id]
-    end
-  rescue ArgumentError
-    raise ActiveRecord::RecordNotFound
+    @date ||= DateParser.parse params[:id]
+    raise ActiveRecord::RecordNotFound if @date.nil?
+    @date
   end
 end
