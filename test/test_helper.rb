@@ -20,3 +20,10 @@ class ActionController::TestCase
     session[:user_id] = user.try :id
   end
 end
+
+class Object
+  infect_an_assertion :assert, :must_be_true, :unary
+  infect_an_assertion :refute, :must_be_false, :unary
+  infect_an_assertion :assert, :wont_be_false, :unary
+  infect_an_assertion :refute, :wont_be_true, :unary
+end
