@@ -1,40 +1,44 @@
 require 'test_helper'
 
-class GroupsHelperTest < ActionView::TestCase
+describe GroupsHelper do
 
-  def current_user
-    @current_user
-  end
+  let(:current_user) { users :mike }
 
-  def setup
+  before do
     @group = groups :payroll
-    @current_user = users :mike
   end
 
-  def test_is_member_member
-    assert @group.is_member? current_user
-    assert is_member?
-  end
+  describe :is_member? do
+    it "passes when current_user is a member" do
+      @group.is_member?(current_user).must_be :present?
+      is_member?.must_be :present?
+    end
 
-  def test_is_member_member
-    @current_user = users :zach
-    refute @group.is_member? current_user
-    refute is_member?
-  end
+    it "fails when there is no group" do
+      @group = nil
+      is_member?.must_be :blank?
+    end
 
-  def test_is_member_no_user
-    @current_user = nil
-    refute is_member?
-  end
+    describe :nonmember do
+      let(:current_user) { users :zach }
 
-  def test_is_member_no_group
-    @group = nil
-    refute is_member?
-  end
+      it "fails when current_user is a nonmember" do
+        @group.is_member?(current_user).must_be :blank?
+        is_member?.must_be :blank?
+      end
+    end
 
-  def test_is_member_no_user_no_group
-    @group = nil
-    @current_user = nil
-    refute is_member?
+    describe :anonymous do
+      let(:current_user) { nil }
+
+      it "fails when there is no current_user" do
+        is_member?.must_be :blank?
+      end
+
+      it "fails when there is no group or current_user" do
+        @group = nil
+      is_member?.must_be :blank?
+      end
+    end
   end
 end
