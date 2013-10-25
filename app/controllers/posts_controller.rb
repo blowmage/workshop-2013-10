@@ -17,7 +17,7 @@ class PostsController < ApplicationController
 
   # GET /groups/:group_id/days/:day/posts/new
   def new
-    redirect_to group_day_posts_url(@group, @day) unless can_add_post?
+    redirect_to group_day_posts_url(@group, @day) and return unless can_add_post?
     @post = @posts.new
   end
 
@@ -27,6 +27,7 @@ class PostsController < ApplicationController
 
   # POST /groups/:group_id/days/:day/posts
   def create
+    redirect_to group_day_posts_url(@group, @day) and return unless can_add_post?
     @post = @group.add_post current_user, @day, post_params[:body]
 
     if @post.valid?

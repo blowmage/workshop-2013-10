@@ -1,7 +1,10 @@
 require 'test_helper'
 
-class PostsControllerTest < ActionController::TestCase
+class PostsControllerMemberTest < ActionController::TestCase
+  tests PostsController
+
   setup do
+    # User is Member, but has no posts for the day
     login_with users(:mike)
     @group = groups :payroll
     @day = Date.today
@@ -17,18 +20,6 @@ class PostsControllerTest < ActionController::TestCase
   test "should get new" do
     get :new, group_id: @group, day_id: @day
     assert_response :success
-  end
-
-  test "should be redirected from new if not logged in" do
-    login_with nil
-    get :new, group_id: @group, day_id: @day
-    assert_redirected_to group_day_posts_path(@group, @day)
-  end
-
-  test "should be redirected from new if already have a post" do
-    login_with @post.user
-    get :new, group_id: @group, day_id: @day
-    assert_redirected_to group_day_posts_path(@group, @day)
   end
 
   test "should create post" do
