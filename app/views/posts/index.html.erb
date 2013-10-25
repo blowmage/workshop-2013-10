@@ -21,6 +21,6 @@
   <% end %>
 </ul>
 
-<% if logged_in? && is_member? %>
+<% if can_add_post? %>
   <%= link_to 'New Post', new_group_day_post_url(@group, @day) %>
 <% end %>
