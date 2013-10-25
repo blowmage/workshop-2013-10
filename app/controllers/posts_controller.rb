@@ -1,6 +1,7 @@
 require "date_parser"
 
 class PostsController < ApplicationController
+  include PostsHelper
   before_action :set_group_and_day_and_posts
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -16,6 +17,7 @@ class PostsController < ApplicationController
 
   # GET /groups/:group_id/days/:day/posts/new
   def new
+    redirect_to group_day_posts_url(@group, @day) unless can_add_post?
     @post = @posts.new
   end
 

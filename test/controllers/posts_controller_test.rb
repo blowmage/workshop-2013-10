@@ -19,6 +19,18 @@ class PostsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should be redirected from new if not logged in" do
+    login_with nil
+    get :new, group_id: @group, day_id: @day
+    assert_redirected_to group_day_posts_path(@group, @day)
+  end
+
+  test "should be redirected from new if already have a post" do
+    login_with @post.user
+    get :new, group_id: @group, day_id: @day
+    assert_redirected_to group_day_posts_path(@group, @day)
+  end
+
   test "should create post" do
     assert_difference('Post.count') do
       post :create, group_id: @group, day_id: @day, post: {  }
